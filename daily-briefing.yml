@@ -1,0 +1,42 @@
+name: Daily Briefing
+
+on:
+  schedule:
+    # GitHub cron uses UTC and is often late. We run 3 times early in the
+    # morning; the first run schedules the ntfy message for exactly 7:30 AM
+    # Vancouver time, later runs see it is already scheduled and do nothing.
+    # B.C. is on permanent Pacific Time (UTC-7) since Nov 2026, so these are
+    # 5:10, 6:10 and 7:10 AM Vancouver time all year.
+    - cron: "10 12 * * *"
+    - cron: "10 13 * * *"
+    - cron: "10 14 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "test = send now | dry-run = print only | daily = normal run"
+        type: choice
+        options: [test, dry-run, daily]
+        default: test
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-briefing
+  cancel-in-progress: false
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run briefing
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
+          MODE: ${{ github.event_name == 'schedule' && 'daily' || inputs.mode }}
+        run: python briefing.py --mode "$MODE"

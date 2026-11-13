@@ -1,0 +1,24 @@
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-ca">
+<title>Vancouver - Weather - Environment Canada</title>
+<updated>2026-11-13T17:13:25Z</updated>
+<id>tag:weather.gc.ca,2013-04-16:20261113171325</id>
+<entry>
+  <title>COASTAL FLOODING STATEMENT, Vancouver</title>
+  <link type="text/html" href="https://weather.gc.ca/warnings/report_coastal_flooding_e.html?mesoCode=cf410"/>
+  <updated>2026-11-13T11:52:22Z</updated>
+  <category term="Warnings and Watches"/>
+  <summary type="html">Persons in or near this area should be on the lookout for adverse weather conditions.</summary>
+</entry>
+<entry>
+  <title>Current Conditions: Mostly Cloudy, 11.0°C</title>
+  <updated>2026-11-13T17:11:00Z</updated>
+  <category term="Current Conditions"/>
+  <summary type="html"><![CDATA[<b>Temperature:</b> 11.0&deg;C<br/>]]></summary>
+</entry>
+<entry>
+  <title>Friday: Showers. Temperature steady near 14.</title>
+  <updated>2026-11-13T12:00:00Z</updated>
+  <category term="Weather Forecasts"/>
+  <summary type="html">Cloudy. Showers beginning early this afternoon.</summary>
+</entry>
+</feed>
