@@ -80,12 +80,20 @@ class T(unittest.TestCase):
         news, w, pr, msg = self.build()
         print("\n" + msg)
         self.assertTrue(msg.startswith("GOOD MORNING! ☀️\nFriday, November 13, 2026"))
-        for s in ["🌍 TOP NEWS", "🌦 VANCOUVER WEATHER", "🎯 TODAY'S PRIORITIES", "Have a productive day!", "Rain: 85%"]:
+        for s in ["🌍 TOP NEWS", "🌦 VANCOUVER WEATHER", "🎯 TODAY'S PRIORITIES", "Have a productive day!", "Rain: 85%", "💬 TODAY'S QUOTE"]:
             self.assertIn(s, msg)
         self.assertEqual(len(pr), 3)
         self.assertLess(len(msg.encode()), 3800)
         import re
         self.assertLessEqual(len(re.findall(r"[A-Za-z']+", re.sub(r"https?://\S+", "", msg))), b.MAX_WORDS)
+
+    def test_quote_daily_and_rotates(self):
+        from datetime import date
+        q = lambda d: b.build_message([], {}, ["a", "b", "c"], d, NOW).split("💬 TODAY'S QUOTE\n")[1].split("\n")[0]
+        days = [date(2026, 11, 13) + timedelta(days=i) for i in range(len(b.QUOTES))]
+        self.assertEqual(len({q(d) for d in days}), len(b.QUOTES))      # no repeat for a month
+        self.assertEqual(q(days[0]), q(days[0]))                       # same all day
+        self.assertTrue(all(len(x.split()) <= 25 for x in b.QUOTES))   # one short sentence
 
     def test_all_sources_down(self):
         with mock.patch.object(b, "http", side_effect=RuntimeError("offline")):

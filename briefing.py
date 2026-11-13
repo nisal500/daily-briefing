@@ -40,7 +40,7 @@ TZ = _vancouver_tz()
 SEND_HOUR, SEND_MIN = 7, 30
 LATE_CUTOFF_HOUR = 11          # after this, skip instead of sending a stale briefing
 NEWS_MAX_AGE_H = 30            # stories older than this are ignored
-MAX_WORDS = 380                # ~2 min reading time
+MAX_WORDS = 400                # ~2 min reading time
 MAX_BYTES = 3800               # ntfy turns messages > 4096 bytes into attachments
 UA = "DailyBriefing/1.0 (personal, non-commercial)"
 
@@ -92,6 +92,42 @@ HABITS = [
     "Spend 10 minutes updating your resume or LinkedIn with recent wins.",
     "Do a 10-minute stretch or bodyweight workout.",
     "Say no to one low-value task so you have time for what matters.",
+]
+
+# Original daily quotes (no famous-person attribution, so nothing is misquoted).
+# Written in "you" form; no personal details, because ntfy topics are not private.
+QUOTES = [
+    "Love who you are now, while you work on who you are becoming.",
+    "Rain falls on Vancouver most of the year, and the city still grows green. So can you.",
+    "Be the person you would be proud to come home to.",
+    "Happiness is not waiting at the end of the road; it is built in the small choices you make today.",
+    "Every peak on the North Shore was climbed one step at a time.",
+    "Your thirties are not late; they are the chapter you get to write on purpose.",
+    "The right people find you more easily when you are busy building a life you love.",
+    "Treat yourself with the patience you would give your best friend.",
+    "Small effort every day beats big motivation once a month.",
+    "Being single is not a waiting room; it is time to build the life you want.",
+    "You can be a work in progress and worth loving at the same time.",
+    "Walk the seawall today like your future belongs to you, because it does.",
+    "Compare yourself only to who you were yesterday.",
+    "Grey skies do not cancel the sunrise; they only hide it for a while.",
+    "Invest in your health, your skills and your friendships; they pay you back for life.",
+    "The life you want is built by the habits you keep when nobody is watching.",
+    "Choose growth over comfort today, and tomorrow will thank you.",
+    "Self-love is built with every promise you keep to yourself.",
+    "Strong people still have hard days; they just keep going.",
+    "Make your own company something you truly enjoy.",
+    "Happiness grows wherever you plant your attention.",
+    "Your story is not behind anyone else's; it is simply yours.",
+    "Do one brave thing today: say hello, sign up, or start.",
+    "Being kind to yourself is not weakness; it is fuel.",
+    "Like the tide at English Bay, effort that keeps coming back shapes everything.",
+    "You are already enough to start, and strong enough to keep going.",
+    "Build a life so good that a partner would be a bonus, not a rescue.",
+    "Show up for your goals, especially on the days you do not feel like it.",
+    "The best investment you will ever make is in the person in the mirror.",
+    "Today counts. Make it count for you.",
+    "Your worth is not measured by who is beside you, but by who you choose to be.",
 ]
 
 
@@ -387,6 +423,7 @@ def build_message(news, weather, priorities, day, at_local):
 
     lines += ["", "🎯 TODAY'S PRIORITIES"]
     lines += [f"{i}. {p}" for i, p in enumerate(priorities, 1)]
+    lines += ["", "💬 TODAY'S QUOTE", f"\u201c{QUOTES[day.toordinal() % len(QUOTES)]}\u201d"]
     lines += ["", "Have a productive day!"]
     return "\n".join(lines)
 
